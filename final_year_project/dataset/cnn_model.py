@@ -24,26 +24,12 @@ class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
         self.cnn_layers = nn.Sequential(
-            # convolution layer
             # Input Tensor Shape: [batch_size, 3, 64, 64]
-            # Output Tensor Shape: [batch_size, 32, 64, 64]
-            # pooling
-            # Input Tensor Shape: [batch_size, 32, 64, 64]
             # Output Tensor Shape: [batch_size, 32, 32, 32]
             ConvUnit(1, 32, 5, 1, 2),
-
-            # convolution layer
             # Input Tensor Shape: [batch_size, 32, 32, 32]
-            # Output Tensor Shape: [batch_size, 64, 32, 32]
-            # pooling
-            # Input Tensor Shape: [batch_size, 64, 32, 32]
             # Output Tensor Shape: [batch_size, 64, 16, 16]
             ConvUnit(32, 64, 3, 1, 1),
-
-            # convolution layer
-            # Input Tensor Shape: [batch_size, 64, 16, 16]
-            # Output Tensor Shape: [batch_size, 64, 16, 16]
-            # pooling
             # Input Tensor Shape: [batch_size, 64, 16, 16]
             # Output Tensor Shape: [batch_size, 64, 8, 8]
             ConvUnit(64, 64, 3, 1, 1),
