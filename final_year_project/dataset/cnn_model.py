@@ -3,6 +3,23 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class ConvUnit(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
+        super(ConvUnit, self).__init__()
+        self.conv_layer = nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding),
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(out_channels, out_channels, kernel_size, stride, padding),
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(2)
+        )
+
+    def forward(self, img):
+        return self.conv_layer(img)
+
+
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
@@ -10,44 +27,26 @@ class CNN(nn.Module):
             # convolution layer
             # Input Tensor Shape: [batch_size, 3, 64, 64]
             # Output Tensor Shape: [batch_size, 32, 64, 64]
-            nn.Conv2d(1, 32, kernel_size=5, stride=1, padding=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(),
-            nn.Conv2d(1, 32, kernel_size=5, stride=1, padding=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(),
             # pooling
             # Input Tensor Shape: [batch_size, 32, 64, 64]
             # Output Tensor Shape: [batch_size, 32, 32, 32]
-            nn.MaxPool2d(2),
+            ConvUnit(1, 32, 5, 1, 2),
 
             # convolution layer
             # Input Tensor Shape: [batch_size, 32, 32, 32]
             # Output Tensor Shape: [batch_size, 64, 32, 32]
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
             # pooling
             # Input Tensor Shape: [batch_size, 64, 32, 32]
             # Output Tensor Shape: [batch_size, 64, 16, 16]
-            nn.MaxPool2d(2),
+            ConvUnit(32, 64, 3, 1, 1),
 
             # convolution layer
             # Input Tensor Shape: [batch_size, 64, 16, 16]
             # Output Tensor Shape: [batch_size, 64, 16, 16]
-            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
             # pooling
             # Input Tensor Shape: [batch_size, 64, 16, 16]
             # Output Tensor Shape: [batch_size, 64, 8, 8]
-            nn.MaxPool2d(2)
+            ConvUnit(64, 64, 3, 1, 1),
         )
 
         self.linear_layers = nn.Sequential(
