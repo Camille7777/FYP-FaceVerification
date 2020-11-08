@@ -36,7 +36,7 @@ class CNN(nn.Module):
         )
 
         self.fc_layer = nn.Sequential(
-            nn.Linear(8*8*64, 1000),
+            nn.Linear(8 * 8 * 64, 1000),
             nn.ReLU(inplace=True),
 
             nn.Linear(1000, 1000),
@@ -64,5 +64,6 @@ class ContrastiveLoss(nn.Module):
 
     def forward(self, output1, output2, label):
         euclidean_distance = F.pairwise_distance(output1, output2)
-        loss = torch.mean((1-label) * torch.pow(euclidean_distance, 2) + (label) * torch.pow(torch.clamp(self.margin - euclidean_distance, min=0.0), 2))
+        loss = torch.mean((1 - label) * torch.pow(euclidean_distance, 2) + (label) * torch.pow(
+            torch.clamp(self.margin - euclidean_distance, min=0.0), 2))
         return loss
