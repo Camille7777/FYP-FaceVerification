@@ -35,17 +35,35 @@ class CNN(nn.Module):
             ConvUnit(64, 64, 3, 1, 1),
         )
 
-        self.linear_layers = nn.Sequential(
-            nn.Linear(8*8*64, 1000)
+        self.fc_layer = nn.Sequential(
+            nn.Linear(8*8*64, 1000),
+            nn.ReLU(inplace=True),
+
+            nn.Linear(1000, 1000),
+            nn.ReLU(inplace=True),
+
+            nn.Linear(1000, 10),
+            nn.ReLU(inplace=True),
         )
 
-    def forward_single(self, img):
+    def forward_once(self, img):
         output = self.cnn_layers(img)
         output = output.view(output.size(0), -1)
-        output = self.linear_layers(output)
+        output = self.fc_layer(output)
         return output
 
-    def forward(self, img1, img2):
-        output1 = self.forward_single(img1)
-        output2 = self.forward_single(img2)
+    def forward(self, input1, input2):
+        output1 = self.forward_once(input1)
+        output2 = self.forward_once(input2)
         return output1, output2
+
+
+class ContrastiveLoss(nn.Module):
+    def __init__(self, margin=2.0):
+        super(ContrastiveLoss, self).__init__()
+        self.margin=margin
+
+    def forward(self, output1, output2, label):
+        euclidean_distance = F.pairwise_distance(output1, output2)
+        loss = torch.mean((1-label) * torch.pow(euclidean_distance, 2) + (label) * torch.pow(torch.clamp(self.margin - euclidean_distance, min=0.0), 2))
+        return loss
