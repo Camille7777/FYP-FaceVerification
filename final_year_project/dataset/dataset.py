@@ -15,22 +15,30 @@ data_transform = transforms.Compose([transforms.Grayscale(1),
 
 
 class LfwDataset(Dataset):
-    def __init__(self, root_dir=None):
+    def __init__(self, root_dir=None, soft_biometrics_file_path='LFW_SoftBiometrics/LFW_ManualAnnotations.txt'):
         if root_dir:
             self.data = ImageFolder(root_dir)
         else:
             self.data = None
+        with open(soft_biometrics_file_path, 'r') as f:
+            self.soft_biometrics = {line.split(' ', 1)[0]: line.split(' ', 1)[1].strip() for line in f.readlines()}
 
     def __getitem__(self, index):
         """
 
         :param index: 表示数据的index
-        :return: 返回两张图片和label，label为1表示同一个人，为0表示非同一个人
+        :return: 返回两张图片,它们的soft_biometrics和label,label为1表示同一个人，为0表示非同一个人
         """
         img1 = self.data[2 * index][0]
         img2 = self.data[2 * index + 1][0]
         label = self.data[2 * index][1]
-        return data_transform(img1), data_transform(img2), torch.tensor([label], dtype=torch.float32)
+        img1_file = self.data.imgs[2 * index][0][self.data.imgs[2 * index][0].rfind('\\') + 1:]
+        img2_file = self.data.imgs[2 * index + 1][0][self.data.imgs[2 * index + 1][0].rfind('\\') + 1:]
+        img1_soft_biometrics = list(map(lambda x: int(x), self.soft_biometrics.get(img1_file).split(' ')))
+        img2_soft_biometrics = list(map(lambda x: int(x), self.soft_biometrics.get(img2_file).split(' ')))
+        return data_transform(img1), data_transform(img2), \
+            torch.tensor(img1_soft_biometrics), torch.tensor(img2_soft_biometrics), \
+            torch.tensor([label], dtype=torch.float32)
 
     def __add__(self, other):
         lfw_dataset = LfwDataset()
@@ -56,6 +64,3 @@ def visualize(data_loader, batch_size=8):
     concatenated = torch.cat((example_batch[0], example_batch[1]), 0)
     imshow(torchvision.utils.make_grid(concatenated, nrow=batch_size))
     print(example_batch[2].numpy())
-
-
-
