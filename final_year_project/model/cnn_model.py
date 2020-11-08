@@ -42,8 +42,7 @@ class CNN(nn.Module):
             nn.Linear(1000, 1000),
             nn.ReLU(inplace=True),
 
-            nn.Linear(1000, 10),
-            nn.ReLU(inplace=True),
+            nn.Linear(1000, 10)
         )
 
     def forward_once(self, img):
