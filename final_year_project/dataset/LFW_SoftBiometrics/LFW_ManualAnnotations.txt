@@ -1,4 +1,4 @@
-sAJ_Cook_0001.jpg 1 2 0 0 2 0 0 0 1 1 0
+AJ_Cook_0001.jpg 1 2 0 0 2 0 0 0 1 1 0
 AJ_Lamas_0001.jpg 0 2 0 0 1 1 0 0 1 1 0
 Aaron_Eckhart_0001.jpg 0 3 0 0 2 0 0 1 1 1 0
 Aaron_Guiel_0001.jpg 0 3 0 0 0 0 0 0 1 1 0
