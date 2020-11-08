@@ -6,6 +6,11 @@ import matplotlib.pyplot as plt
 import torch
 import numpy as np
 
+soft_biometrics_file_path='LFW_SoftBiometrics/LFW_ManualAnnotations.txt'
+with open(soft_biometrics_file_path, 'r') as f:
+    soft_biometrics = {line.split(' ', 1)[0]: line.split(' ', 1)[1].strip() for line in f.readlines()}
+
+
 data_transform = transforms.Compose([transforms.Grayscale(1),
                                      transforms.Resize((64, 64), 2),
                                      transforms.RandomHorizontalFlip(p=0.5),
@@ -15,13 +20,11 @@ data_transform = transforms.Compose([transforms.Grayscale(1),
 
 
 class LfwDataset(Dataset):
-    def __init__(self, root_dir=None, soft_biometrics_file_path='LFW_SoftBiometrics/LFW_ManualAnnotations.txt'):
+    def __init__(self, root_dir=None):
         if root_dir:
             self.data = ImageFolder(root_dir)
         else:
             self.data = None
-        with open(soft_biometrics_file_path, 'r') as f:
-            self.soft_biometrics = {line.split(' ', 1)[0]: line.split(' ', 1)[1].strip() for line in f.readlines()}
 
     def __getitem__(self, index):
         """
@@ -34,8 +37,8 @@ class LfwDataset(Dataset):
         label = self.data[2 * index][1]
         img1_file = self.data.imgs[2 * index][0][self.data.imgs[2 * index][0].rfind('\\') + 1:]
         img2_file = self.data.imgs[2 * index + 1][0][self.data.imgs[2 * index + 1][0].rfind('\\') + 1:]
-        img1_soft_biometrics = list(map(lambda x: int(x), self.soft_biometrics.get(img1_file).split(' ')))
-        img2_soft_biometrics = list(map(lambda x: int(x), self.soft_biometrics.get(img2_file).split(' ')))
+        img1_soft_biometrics = list(map(lambda x: int(x), soft_biometrics.get(img1_file).split(' ')))
+        img2_soft_biometrics = list(map(lambda x: int(x), soft_biometrics.get(img2_file).split(' ')))
         return data_transform(img1), data_transform(img2), \
             torch.tensor(img1_soft_biometrics), torch.tensor(img2_soft_biometrics), \
             torch.tensor([label], dtype=torch.float32)
