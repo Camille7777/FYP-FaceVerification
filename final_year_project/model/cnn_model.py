@@ -42,8 +42,7 @@ class CNN(nn.Module):
             nn.Linear(1000, 1000),
             nn.ReLU(inplace=True),
 
-            nn.Linear(1000, 10),
-            nn.ReLU(inplace=True),
+            nn.Linear(1000, 10)
         )
 
     def forward_once(self, img):
@@ -61,7 +60,7 @@ class CNN(nn.Module):
 class ContrastiveLoss(nn.Module):
     def __init__(self, margin=2.0):
         super(ContrastiveLoss, self).__init__()
-        self.margin=margin
+        self.margin = margin
 
     def forward(self, output1, output2, label):
         euclidean_distance = F.pairwise_distance(output1, output2)
