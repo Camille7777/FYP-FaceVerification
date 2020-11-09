@@ -1,10 +1,12 @@
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 import torchvision
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 import matplotlib.pyplot as plt
 import torch
 import numpy as np
+from torch.autograd import Variable
+from tqdm import tqdm
 
 soft_biometrics_file_path='LFW_SoftBiometrics/LFW_ManualAnnotations.txt'
 with open(soft_biometrics_file_path, 'r') as f:
@@ -67,3 +69,51 @@ def visualize(data_loader, batch_size=8):
     concatenated = torch.cat((example_batch[0], example_batch[1]), 0)
     imshow(torchvision.utils.make_grid(concatenated, nrow=batch_size))
     print(example_batch[2].numpy())
+
+
+'''set1 = LfwDataset('lfw_cropped/split_data//train/01')
+set2 = LfwDataset('lfw_cropped/split_data//train/02')
+set3 = LfwDataset('lfw_cropped/split_data//train/03')
+set4 = LfwDataset('lfw_cropped/split_data//train/04')
+set5 = LfwDataset('lfw_cropped/split_data//train/05')
+set6 = LfwDataset('lfw_cropped/split_data//train/06')
+set7 = LfwDataset('lfw_cropped/split_data//train/07')
+set8 = LfwDataset('lfw_cropped/split_data//train/08')
+set9 = LfwDataset('lfw_cropped/split_data//train/09')
+set10 = LfwDataset('lfw_cropped/split_data//train/010')'''
+
+
+def load_lfw(set_dir, batch_size, epoch_num):
+    set_data = LfwDataset(root_dir=set_dir)
+    data_loader = DataLoader(dataset=set_data, batch_size=batch_size, shuffle=True)
+
+    for i in tqdm(range(epoch_num)):
+        for n, data in enumerate(data_loader, 0):
+            img1, img2, img1_soft_biometrics, img2_soft_biometrics, label = data
+            img1, img2, img1_soft_biometrics, img2_soft_biometrics, label = Variable(img1).cuda(), Variable(img2).cuda(), \
+                                                                            Variable(img1_soft_biometrics).cuda(), Variable(img2_soft_biometrics).cuda(), \
+                                                                            Variable(label).cuda()
+
+
+if __name__ == "__main__":
+    set_dir = ['lfw_cropped/split_data//train/01/',
+               'lfw_cropped/split_data//train/02/',
+               'lfw_cropped/split_data//train/03/',
+               'lfw_cropped/split_data//train/04/',
+               'lfw_cropped/split_data//train/05/',
+               'lfw_cropped/split_data//train/06/',
+               'lfw_cropped/split_data//train/07/',
+               'lfw_cropped/split_data//train/08/',
+               'lfw_cropped/split_data//train/09/',
+               'lfw_cropped/split_data//train/010/']
+
+    epoch_num = 1
+    batch_size = 8
+    train_data_nums = 10800
+    max_iterate = int((train_data_nums + batch_size - 1) / batch_size * epoch_num)
+
+    for set_num in range(0, len(set_dir)):
+        load_lfw(set_dir[set_num], batch_size, epoch_num)
+
+
+
