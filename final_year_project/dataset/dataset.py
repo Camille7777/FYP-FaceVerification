@@ -8,7 +8,8 @@ import numpy as np
 from torch.autograd import Variable
 from tqdm import tqdm
 
-soft_biometrics_file_path='LFW_SoftBiometrics/LFW_ManualAnnotations.txt'
+
+soft_biometrics_file_path = 'dataset/LFW_SoftBiometrics/LFW_ManualAnnotations.txt'
 with open(soft_biometrics_file_path, 'r') as f:
     soft_biometrics = {line.split(' ', 1)[0]: line.split(' ', 1)[1].strip() for line in f.readlines()}
 
@@ -45,9 +46,12 @@ class LfwDataset(Dataset):
             torch.tensor(img1_soft_biometrics), torch.tensor(img2_soft_biometrics), \
             torch.tensor([label], dtype=torch.float32)
 
-    def __add__(self, other):
+    def __radd__(self, other):
         lfw_dataset = LfwDataset()
-        lfw_dataset.data = self.data + other.data
+        if isinstance(other, LfwDataset):
+            lfw_dataset.data = self.data + other.data
+        else:
+            lfw_dataset.data = self.data
         return lfw_dataset
 
     def __len__(self):
