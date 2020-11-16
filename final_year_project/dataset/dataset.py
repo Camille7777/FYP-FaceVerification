@@ -74,3 +74,5 @@ def visualize(dataset, batch_size=8):
     print(example_batch[-1].numpy())
 
 
+
+
