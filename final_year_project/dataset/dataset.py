@@ -42,7 +42,7 @@ class LfwDataset(Dataset):
         img2_soft_biometrics = list(map(lambda x: int(x), soft_biometrics.get(img2_file).split(' ')))
         return data_transform(img1), data_transform(img2), \
             torch.tensor(img1_soft_biometrics), torch.tensor(img2_soft_biometrics), \
-            torch.tensor([label], dtype=torch.float32)
+            torch.tensor(label, dtype=torch.float32)
 
     def __radd__(self, other):
         lfw_dataset = LfwDataset()

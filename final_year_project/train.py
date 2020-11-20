@@ -1,6 +1,5 @@
 import torch
-from torch.optim import Adam
-from torch.optim import SGD
+from torch.optim import Adam, SGD
 from torch.utils.data import DataLoader
 import tqdm
 import os
@@ -104,9 +103,7 @@ class Trainer:
             counter = 0
             for i, data in enumerate(train_dataloader, 0):
                 img1, img2, _, _, train_label = data
-                img1, img2, _, _, train_label = img1.to(self.device), img2.to(self.device), \
-                                                _.to(self.device), _.to(self.device), \
-                                                train_label.to(self.device)
+                img1, img2, train_label = img1.to(self.device), img2.to(self.device), train_label.to(self.device)
                 counter += len(train_label)
                 print("Pair {}\n".format(counter))
                 self.model.train()
@@ -118,11 +115,9 @@ class Trainer:
                 self.optimizer.step()
                 self.model.eval()
                 output1, output2 = self.model(img1, img2)
-                After_dist = F.pairwise_distance(output1, output2)
-                #print("After_dist: {}\n".format(After_dist))
                 loss_contrastive = self.loss_fcn(output1, output2, train_label)
                 print("loss after step: {}\n".format(loss_contrastive.item()))
-                predict = (F.pairwise_distance(output1, output2) < 1).int()
+                predict = (F.pairwise_distance(output1, output2) < 1).float()
                 print('Accurancy:', (predict == train_label).float().mean().item())
 
                 if i % 10 == 0:
@@ -147,7 +142,7 @@ def show_plot(iteration, loss):
     plt.show()
 
 
-t = Trainer(CNN, learning_rate=2e-2, batch_size=32, use_cuda=True)
+t = Trainer(CNN, learning_rate=1e-2, batch_size=32, use_cuda=True)
 t.train()
 
 '''loss_func = nn.CrossEntropyLoss()
