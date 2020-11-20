@@ -1,26 +1,26 @@
 import torch
 from torch.optim import Adam
+from torch.optim import SGD
 from torch.utils.data import DataLoader
 import tqdm
 import os
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
-import torch.nn as nn
 
 from model.cnn_model import CNN, ContrastiveLoss
 from dataset.dataset import LfwDataset
 import numpy as np
 
-train_number_epochs = 10
+train_number_epochs = 20
 
 
 class Trainer:
-    def __init__(self, model, learning_rate=5e-4, batch_size=64, use_cuda=True):
+    def __init__(self, model, learning_rate, batch_size, use_cuda=True):
         self.model = model()
         self.device = torch.device('cuda:0') if use_cuda and torch.cuda.is_available() else torch.device('cpu')
         self.batch_size = batch_size
         self.loss_fcn = ContrastiveLoss()
-        self.optimizer = Adam(self.model.parameters(), lr=learning_rate)
+        self.optimizer = SGD(self.model.parameters(), lr=learning_rate)
         self.data_root = 'dataset/lfw_cropped/split_data/train'
         self.datasets = [LfwDataset(os.path.join(self.data_root, f'0{i}'))
                          for i in tqdm.tqdm(range(1, 11), desc='loading data...')]
@@ -101,25 +101,30 @@ class Trainer:
         dataset = sum([self.datasets[i] for i in range(10)])
         train_dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True)
         for epoch in range(0, train_number_epochs):
+            counter = 0
             for i, data in enumerate(train_dataloader, 0):
-                img1, img2, img1_soft_biometrics, img2_soft_biometrics, train_label = data
-                img1, img2, img1_soft_biometrics, img2_soft_biometrics, train_label = img1.to(self.device), \
-                                                                                      img2.to(self.device), \
-                                                                                      img1_soft_biometrics.to(
-                                                                                          self.device), \
-                                                                                      img2_soft_biometrics.to(
-                                                                                          self.device), \
-                                                                                      train_label.to(self.device)
+                img1, img2, _, _, train_label = data
+                img1, img2, _, _, train_label = img1.to(self.device), img2.to(self.device), \
+                                                _.to(self.device), _.to(self.device), \
+                                                train_label.to(self.device)
+                counter += len(train_label)
+                print("Pair {}\n".format(counter))
+                self.model.train()
                 output1, output2 = self.model(img1, img2)
                 loss_contrastive = self.loss_fcn(output1, output2, train_label)
+                print("loss before step: {}\n".format(loss_contrastive.item()))
                 self.optimizer.zero_grad()
                 loss_contrastive.backward()
-                print("loss before step: {:.4f}\n".format(loss_contrastive.item()))
                 self.optimizer.step()
                 self.model.eval()
                 output1, output2 = self.model(img1, img2)
                 After_dist = F.pairwise_distance(output1, output2)
-                print("After_dist: {}\n".format(After_dist))
+                #print("After_dist: {}\n".format(After_dist))
+                loss_contrastive = self.loss_fcn(output1, output2, train_label)
+                print("loss after step: {}\n".format(loss_contrastive.item()))
+                predict = (F.pairwise_distance(output1, output2) < 1).int()
+                print('Accurancy:', (predict == train_label).float().mean().item())
+
                 if i % 10 == 0:
                     self.iteration_number += 10
                     self.counter.append(self.iteration_number)
@@ -132,7 +137,7 @@ def imshow(img, text=None, should_save=False):
     npimg = img.numpy()
     plt.axis("off")
     if text:
-        plt.text(75, 8, text, style='italic', fontweight='bold', bbox={'facecolor':'white', 'alpha':0.8, 'pad': 10})
+        plt.text(75, 8, text, style='italic', fontweight='bold', bbox={'facecolor': 'white', 'alpha':0.8, 'pad': 10})
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
@@ -142,7 +147,7 @@ def show_plot(iteration, loss):
     plt.show()
 
 
-t = Trainer(CNN, learning_rate=5e-4, batch_size=64, use_cuda=True)
+t = Trainer(CNN, learning_rate=2e-2, batch_size=32, use_cuda=True)
 t.train()
 
 '''loss_func = nn.CrossEntropyLoss()

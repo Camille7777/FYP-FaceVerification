@@ -67,7 +67,7 @@ class ContrastiveLoss(nn.Module):
         labels = label
         euclidean_distance = F.pairwise_distance(output1, output2)
         print("Before_dist: {}\n".format(euclidean_distance))
-        print("Label: {}".format(labels))
+        #print("Label: {}".format(labels))
         loss = torch.mean(label * torch.pow(euclidean_distance, 2) + (1 - label) * torch.pow(
             torch.clamp(self.margin - euclidean_distance, min=0.0), 2))
 
