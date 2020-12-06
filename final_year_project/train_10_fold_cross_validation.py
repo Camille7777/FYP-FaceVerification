@@ -41,8 +41,7 @@ class Trainer:
             valid, train = self.get_10_fold_data(k)
             #valid_loader = DataLoader(valid, batch_size=self.batch_size, shuffle=True)
             #train_loader = DataLoader(train, batch_size=self.batch_size, shuffle=True)
-            train_ls = self.train_k(valid, train, num_epochs)
-            valid_ls = self.train_k(valid, train, num_epochs)
+            train_ls, valid_ls = self.train_k(valid, train, num_epochs)
 
             print('*' * 25, 'Number ', k + 1, ' fold', '*' * 25)
             print('train_loss:%.4f' % train_ls[-1][0], 'train_acc:%.4f\n' % train_ls[-1][1],
@@ -62,7 +61,9 @@ class Trainer:
         train_dataloader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         valid_dataloader = DataLoader(valid_dataset, batch_size=self.batch_size, shuffle=True)
         for epoch in range(0, train_num_epochs):
-            for i, data in enumerate(train_dataloader, 0):
+            for i, data in tqdm.tqdm(enumerate(train_dataloader, 0),
+                                     desc='Training Epoch_%s' % epoch,
+                                     total=len(train_dataloader)):
                 img1, img2,  _, _, train_label = data
                 img1, img2, train_label = img1.to(self.device), img2.to(self.device), train_label.to(self.device)
 
@@ -75,23 +76,21 @@ class Trainer:
                 train_predict_lb = (train_dist < 1).int()
                 train_accurancy = (train_predict_lb == train_label).float().mean().item()
                 train_ls.append(self.res(loss_contrastive.item(), train_accurancy))
-
-            for j, data1 in enumerate(valid_dataloader, 0):
-                self.model.eval()
-                img01, img02, _, _, valid_label = data1
-                img01, img02, valid_label = img1.to(self.device), img2.to(self.device), train_label.to(self.device)
-                count = 0
-
-                output1, output2 = self.model(img1, img2)
-                loss_contrastive = self.loss_fcn(output1, output2, train_label)
-                self.optimizer.zero_grad()
-                loss_contrastive.backward()
-                self.optimizer.step()
-                valid_dist = F.pairwise_distance(output1, output2)
-                valid_predict_lb = (valid_dist < 1).int()
-                count += (valid_predict_lb == valid_label).float().sum()
-                valid_accurancy = count.item() / len(valid_dataloader.dataset)
-                valid_ls.append(self.res(loss_contrastive.item(), valid_accurancy))
+            count = 0
+            with torch.no_grad():
+                for j, data1 in tqdm.tqdm(enumerate(valid_dataloader, 0),
+                                          desc='iteration on valid set...',
+                                          total=len(valid_dataloader)):
+                    self.model.eval()
+                    img01, img02, _, _, valid_label = data1
+                    img01, img02, valid_label = img01.to(self.device), img02.to(self.device), valid_label.to(self.device)
+                    output01, output02 = self.model(img01, img02)
+                    loss_contrastive = self.loss_fcn(output01, output02, valid_label)
+                    valid_dist = F.pairwise_distance(output01, output02)
+                    valid_predict_lb = (valid_dist < 1).int()
+                    count += (valid_predict_lb == valid_label).float().sum()
+                    valid_accurancy = count.item() / len(valid_dataloader.dataset)
+                    valid_ls.append(self.res(loss_contrastive.item(), valid_accurancy))
 
         return train_ls, valid_ls
 
