@@ -1,0 +1,51 @@
+************************* Number  1  fold *************************
+train_loss:0.8884 train_acc:0.6250
+ valid loss:1.0140 valid_acc:0.6602
+Training Epoch_0: 100%|██████████| 1519/1519 [01:58<00:00, 12.87it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:09<00:00, 17.52it/s]
+************************* Number  2  fold *************************
+train_loss:0.8273 train_acc:0.6250
+ valid loss:0.6448 valid_acc:0.6304
+Training Epoch_0: 100%|██████████| 1519/1519 [02:21<00:00, 10.74it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:14<00:00, 11.37it/s]
+************************* Number  3  fold *************************
+train_loss:0.9009 train_acc:0.5417
+ valid loss:0.8181 valid_acc:0.6513
+Training Epoch_0: 100%|██████████| 1519/1519 [02:17<00:00, 11.03it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:09<00:00, 17.29it/s]
+************************* Number  4  fold *************************
+train_loss:0.6053 train_acc:0.7917
+ valid loss:0.8736 valid_acc:0.6730
+Training Epoch_0: 100%|██████████| 1519/1519 [01:59<00:00, 12.68it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:09<00:00, 18.14it/s]
+************************* Number  5  fold *************************
+train_loss:0.5549 train_acc:0.7500
+ valid loss:0.8062 valid_acc:0.6344
+Training Epoch_0: 100%|██████████| 1519/1519 [01:56<00:00, 13.08it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:09<00:00, 17.70it/s]
+************************* Number  6  fold *************************
+train_loss:0.7533 train_acc:0.7500
+ valid loss:0.8914 valid_acc:0.6850
+Training Epoch_0: 100%|██████████| 1519/1519 [02:08<00:00, 11.80it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:10<00:00, 16.57it/s]
+************************* Number  7  fold *************************
+train_loss:0.9403 train_acc:0.5417
+ valid loss:1.0657 valid_acc:0.6357
+Training Epoch_0: 100%|██████████| 1519/1519 [02:06<00:00, 11.96it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:10<00:00, 16.87it/s]
+************************* Number  8  fold *************************
+train_loss:1.0413 train_acc:0.5417
+ valid loss:0.7878 valid_acc:0.6754
+Training Epoch_0: 100%|██████████| 1519/1519 [02:29<00:00, 10.19it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:11<00:00, 14.27it/s]
+************************* Number  9  fold *************************
+train_loss:0.9113 train_acc:0.5833
+ valid loss:0.8467 valid_acc:0.6398
+Training Epoch_0: 100%|██████████| 1519/1519 [02:52<00:00,  8.81it/s]
+iteration on valid set...: 100%|██████████| 169/169 [00:22<00:00,  7.43it/s]
+************************* Number  10  fold *************************
+train_loss:0.6595 train_acc:0.7917
+ valid loss:1.2308 valid_acc:0.6720
+########## Final 10-fold cross validation result ##########
+train_loss_sum:0.8082 train_acc_sum:0.6542
+ valid_loss_sum:0.8979 valid_acc_sum:0.6557

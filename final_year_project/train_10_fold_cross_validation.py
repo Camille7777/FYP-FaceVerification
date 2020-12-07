@@ -18,7 +18,8 @@ class Trainer:
         self.device = torch.device('cuda:0') if use_cuda and torch.cuda.is_available() else torch.device('cpu')
         self.batch_size = batch_size
         self.loss_fcn = ContrastiveLoss()
-        self.optimizer = SGD(self.model.parameters(), lr=learning_rate)
+        self.optimizer = Adam
+        self.lr = learning_rate
         self.data_root = 'dataset/lfw_cropped/split_data/train'
         self.datasets = [LfwDataset(os.path.join(self.data_root, f'0{i}'))
                          for i in tqdm.tqdm(range(1, 11), desc='loading data...')]
@@ -57,8 +58,10 @@ class Trainer:
         train_ls, valid_ls = [], []
         torch.manual_seed(seed)
         model = self.model().to(self.device)
+        optimizer = self.optimizer(model.parameters(), lr=self.lr, betas=(0.9, 0.98))
         train_dataloader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         valid_dataloader = DataLoader(valid_dataset, batch_size=self.batch_size, shuffle=True)
+        model.train()
         for epoch in range(train_num_epochs):
             for i, data in tqdm.tqdm(enumerate(train_dataloader, 0),
                                      desc='Training Epoch_%s' % epoch,
@@ -68,19 +71,19 @@ class Trainer:
 
                 output1, output2 = model(img1, img2)
                 loss_contrastive = self.loss_fcn(output1, output2, train_label)
-                self.optimizer.zero_grad()
+                optimizer.zero_grad()
                 loss_contrastive.backward()
-                self.optimizer.step()
+                optimizer.step()
                 train_dist = F.pairwise_distance(output1, output2)
                 train_predict_lb = (train_dist < 1).int()
                 train_accurancy = (train_predict_lb == train_label).float().mean().item()
                 train_ls.append(self.res(loss_contrastive.item(), train_accurancy))
             count = 0
             with torch.no_grad():
+                model.eval()
                 for j, data1 in tqdm.tqdm(enumerate(valid_dataloader),
                                           desc='iteration on valid set...',
                                           total=len(valid_dataloader)):
-                    self.model.eval()
                     img01, img02, _, _, valid_label = data1
                     img01, img02, valid_label = img01.to(self.device), img02.to(self.device), valid_label.to(self.device)
                     output01, output02 = model(img01, img02)
@@ -99,5 +102,3 @@ class Trainer:
 
 t = Trainer(CNN, learning_rate=1e-2, batch_size=32, use_cuda=True)
 t.k_fold_iteration(1)
-
-
