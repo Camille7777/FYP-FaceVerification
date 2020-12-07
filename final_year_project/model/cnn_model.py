@@ -56,6 +56,15 @@ class CNN(nn.Module):
         output2 = self.forward_once(input2)
         return output1, output2
 
+    # def init_weights(self, module):
+    #     if isinstance(module, nn.Linear):
+    #         module.weight.data.normal_(mean=0.0, std=self.init_std)
+    #         if module.bias is not None:
+    #             module.bias.data.zero_()
+    #     elif isinstance(module, nn.BatchNorm2d):
+    #         module.weight.data.fill_(1.0)
+    #         module.bias.data.zero_()
+
 
 class ContrastiveLoss(nn.Module):
     def __init__(self, margin=2.0):

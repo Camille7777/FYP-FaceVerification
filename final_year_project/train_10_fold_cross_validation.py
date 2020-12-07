@@ -14,7 +14,7 @@ train_number_epochs = 1
 
 class Trainer:
     def __init__(self, model, learning_rate=1e-2, batch_size=32, use_cuda=True):
-        self.model = model()
+        self.model = model
         self.device = torch.device('cuda:0') if use_cuda and torch.cuda.is_available() else torch.device('cpu')
         self.batch_size = batch_size
         self.loss_fcn = ContrastiveLoss()
@@ -39,9 +39,7 @@ class Trainer:
 
         for k in range(10):
             valid, train = self.get_10_fold_data(k)
-            #valid_loader = DataLoader(valid, batch_size=self.batch_size, shuffle=True)
-            #train_loader = DataLoader(train, batch_size=self.batch_size, shuffle=True)
-            train_ls, valid_ls = self.train_k(valid, train, num_epochs)
+            train_ls, valid_ls = self.train_k(valid, train, num_epochs, seed=k)
 
             print('*' * 25, 'Number ', k + 1, ' fold', '*' * 25)
             print('train_loss:%.4f' % train_ls[-1][0], 'train_acc:%.4f\n' % train_ls[-1][1],
@@ -55,19 +53,20 @@ class Trainer:
         print('train_loss_sum:%.4f' % (train_loss_sum / 10), 'train_acc_sum:%.4f\n' % (train_acc_sum / 10),
               'valid_loss_sum:%.4f' % (valid_loss_sum / 10), 'valid_acc_sum:%.4f' % (valid_acc_sum / 10))
 
-    def train_k(self, valid_dataset, train_dataset, train_num_epochs):
+    def train_k(self, valid_dataset, train_dataset, train_num_epochs, seed):
         train_ls, valid_ls = [], []
-        self.model.cuda()
+        torch.manual_seed(seed)
+        model = self.model().to(self.device)
         train_dataloader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         valid_dataloader = DataLoader(valid_dataset, batch_size=self.batch_size, shuffle=True)
-        for epoch in range(0, train_num_epochs):
+        for epoch in range(train_num_epochs):
             for i, data in tqdm.tqdm(enumerate(train_dataloader, 0),
                                      desc='Training Epoch_%s' % epoch,
                                      total=len(train_dataloader)):
                 img1, img2,  _, _, train_label = data
                 img1, img2, train_label = img1.to(self.device), img2.to(self.device), train_label.to(self.device)
 
-                output1, output2 = self.model(img1, img2)
+                output1, output2 = model(img1, img2)
                 loss_contrastive = self.loss_fcn(output1, output2, train_label)
                 self.optimizer.zero_grad()
                 loss_contrastive.backward()
@@ -78,20 +77,20 @@ class Trainer:
                 train_ls.append(self.res(loss_contrastive.item(), train_accurancy))
             count = 0
             with torch.no_grad():
-                for j, data1 in tqdm.tqdm(enumerate(valid_dataloader, 0),
+                for j, data1 in tqdm.tqdm(enumerate(valid_dataloader),
                                           desc='iteration on valid set...',
                                           total=len(valid_dataloader)):
                     self.model.eval()
                     img01, img02, _, _, valid_label = data1
                     img01, img02, valid_label = img01.to(self.device), img02.to(self.device), valid_label.to(self.device)
-                    output01, output02 = self.model(img01, img02)
+                    output01, output02 = model(img01, img02)
                     loss_contrastive = self.loss_fcn(output01, output02, valid_label)
                     valid_dist = F.pairwise_distance(output01, output02)
                     valid_predict_lb = (valid_dist < 1).int()
                     count += (valid_predict_lb == valid_label).float().sum()
                     valid_accurancy = count.item() / len(valid_dataloader.dataset)
                     valid_ls.append(self.res(loss_contrastive.item(), valid_accurancy))
-
+        torch.save(model.state_dict(), f'model_state_dict/model_{seed}.pkl')
         return train_ls, valid_ls
 
     def res(self, x, y):
