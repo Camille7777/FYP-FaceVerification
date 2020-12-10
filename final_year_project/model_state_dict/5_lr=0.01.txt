@@ -1,0 +1,134 @@
+loading data...: 100%|██████████| 10/10 [00:03<00:00,  2.89it/s]
+************************* Number  1  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:33<00:00, 16.26it/s]
+Training Epoch_1:   0%|          | 0/1519 [00:00<?, ?it/s]train_loss:0.8062 train_acc:0.6250
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.80it/s]
+train_loss:0.7232 train_acc:0.7500
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.84it/s]
+train_loss:0.6726 train_acc:0.7917
+Training Epoch_3: 100%|██████████| 1519/1519 [01:32<00:00, 16.37it/s]
+train_loss:0.4752 train_acc:0.8333
+Training Epoch_4: 100%|██████████| 1519/1519 [01:33<00:00, 16.32it/s]
+train_loss:0.4366 train_acc:0.8333
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.86it/s]
+valid loss:0.2822 valid_acc:0.8572
+************************* Number  2  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:32<00:00, 16.49it/s]
+train_loss:0.9111 train_acc:0.6250
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.75it/s]
+train_loss:0.7116 train_acc:0.7500
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.76it/s]
+train_loss:0.4997 train_acc:0.8750
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.84it/s]
+train_loss:0.7237 train_acc:0.7500
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.85it/s]
+train_loss:0.8248 train_acc:0.7083
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 24.35it/s]
+valid loss:0.4023 valid_acc:0.8111
+************************* Number  3  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.70it/s]
+train_loss:0.9406 train_acc:0.4583
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.78it/s]
+train_loss:0.4808 train_acc:0.8750
+Training Epoch_2: 100%|██████████| 1519/1519 [01:31<00:00, 16.66it/s]
+train_loss:0.5003 train_acc:0.8750
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.75it/s]
+train_loss:0.5604 train_acc:0.7917
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.76it/s]
+train_loss:0.3682 train_acc:0.8750
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 24.28it/s]
+valid loss:0.5048 valid_acc:0.8522
+************************* Number  4  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.87it/s]
+train_loss:1.1357 train_acc:0.5417
+Training Epoch_1: 100%|██████████| 1519/1519 [01:29<00:00, 16.91it/s]
+train_loss:0.6157 train_acc:0.7500
+Training Epoch_2: 100%|██████████| 1519/1519 [01:29<00:00, 16.89it/s]
+train_loss:0.5738 train_acc:0.8333
+Training Epoch_3: 100%|██████████| 1519/1519 [01:29<00:00, 16.94it/s]
+train_loss:0.5370 train_acc:0.8333
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.85it/s]
+train_loss:0.5250 train_acc:0.8333
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.91it/s]
+valid loss:0.4204 valid_acc:0.8376
+************************* Number  5  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.84it/s]
+train_loss:1.1304 train_acc:0.4583
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.80it/s]
+train_loss:0.5012 train_acc:0.8750
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.81it/s]
+train_loss:0.6511 train_acc:0.8750
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.80it/s]
+train_loss:0.4276 train_acc:0.9167
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.86it/s]
+train_loss:0.5688 train_acc:0.7500
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 24.29it/s]
+valid loss:0.3895 valid_acc:0.8572
+************************* Number  6  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.74it/s]
+train_loss:0.7424 train_acc:0.6667
+Training Epoch_1: 100%|██████████| 1519/1519 [01:31<00:00, 16.68it/s]
+train_loss:0.8535 train_acc:0.7083
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.80it/s]
+train_loss:0.6142 train_acc:0.7917
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.82it/s]
+train_loss:0.4565 train_acc:0.8750
+Training Epoch_4: 100%|██████████| 1519/1519 [01:29<00:00, 16.91it/s]
+train_loss:0.3872 train_acc:0.9167
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.96it/s]
+valid loss:0.4602 valid_acc:0.9004
+************************* Number  7  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.75it/s]
+train_loss:1.1103 train_acc:0.4583
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.70it/s]
+train_loss:0.8640 train_acc:0.6250
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.79it/s]
+train_loss:0.5503 train_acc:0.7917
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.83it/s]
+train_loss:0.8985 train_acc:0.6250
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.75it/s]
+train_loss:0.3874 train_acc:0.9167
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 24.09it/s]
+valid loss:0.3197 valid_acc:0.8481
+************************* Number  8  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:30<00:00, 16.77it/s]
+train_loss:1.0790 train_acc:0.5417
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.78it/s]
+train_loss:0.7821 train_acc:0.7500
+Training Epoch_2: 100%|██████████| 1519/1519 [01:30<00:00, 16.85it/s]
+train_loss:0.3668 train_acc:0.9167
+Training Epoch_3: 100%|██████████| 1519/1519 [01:30<00:00, 16.83it/s]
+train_loss:0.3159 train_acc:0.9583
+Training Epoch_4: 100%|██████████| 1519/1519 [01:31<00:00, 16.68it/s]
+train_loss:0.4453 train_acc:0.8333
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.84it/s]
+valid loss:0.6844 valid_acc:0.8531
+************************* Number  9  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:31<00:00, 16.64it/s]
+train_loss:0.8268 train_acc:0.7083
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.73it/s]
+train_loss:0.5846 train_acc:0.7500
+Training Epoch_2: 100%|██████████| 1519/1519 [01:31<00:00, 16.56it/s]
+train_loss:0.5227 train_acc:0.8333
+Training Epoch_3: 100%|██████████| 1519/1519 [01:31<00:00, 16.63it/s]
+train_loss:0.5507 train_acc:0.8750
+Training Epoch_4: 100%|██████████| 1519/1519 [01:32<00:00, 16.46it/s]
+train_loss:0.4762 train_acc:0.7917
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.80it/s]
+valid loss:0.7401 valid_acc:0.8537
+************************* Number  10  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:31<00:00, 16.57it/s]
+train_loss:0.9498 train_acc:0.5833
+Training Epoch_1: 100%|██████████| 1519/1519 [01:30<00:00, 16.79it/s]
+train_loss:0.6927 train_acc:0.7083
+Training Epoch_2: 100%|██████████| 1519/1519 [01:29<00:00, 16.96it/s]
+train_loss:0.6436 train_acc:0.7083
+Training Epoch_3: 100%|██████████| 1519/1519 [01:29<00:00, 16.93it/s]
+train_loss:0.4543 train_acc:0.8750
+Training Epoch_4: 100%|██████████| 1519/1519 [01:30<00:00, 16.87it/s]
+train_loss:0.6541 train_acc:0.6667
+iteration on valid set...: 100%|██████████| 169/169 [00:07<00:00, 23.56it/s]
+valid loss:0.5030 valid_acc:0.8522
+########## Final 10-fold cross validation result ##########
+train_loss_sum:0.5074 train_acc_sum:0.8125
+ valid_loss_sum:0.4707 valid_acc_sum:0.8523
