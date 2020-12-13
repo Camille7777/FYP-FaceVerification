@@ -7,7 +7,7 @@ from torch.nn import functional as F
 import tqdm
 import os
 
-from model.cnn_model import CNN, ContrastiveLoss
+from model.cnn_model import DSASN, ContrastiveLoss
 from dataset.dataset import LfwDataset
 from train_fusion import *
 
@@ -142,5 +142,5 @@ def test_model(model, test_loader: DataLoader):
 if __name__ == '__main__':
     train_number_epochs = 2
 
-    t = Trainer(CNN, learning_rate=2e-4, batch_size=32, use_cuda=True)
+    t = Trainer(DSASN, learning_rate=2e-4, batch_size=32, use_cuda=True)
     #t.k_fold_iteration(train_number_epochs)
