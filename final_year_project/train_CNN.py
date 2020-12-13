@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
-from model.cnn_model import CNN, ContrastiveLoss
+from model.cnn_model import DSASN, ContrastiveLoss
 from dataset.dataset import LfwDataset
 import numpy as np
 
@@ -87,7 +87,7 @@ def show_plot(iteration, loss):
     plt.show()
 
 
-t = Trainer(CNN, learning_rate=1e-2, batch_size=32, use_cuda=True)
+t = Trainer(DSASN, learning_rate=1e-2, batch_size=32, use_cuda=True)
 t.train()
 
 
