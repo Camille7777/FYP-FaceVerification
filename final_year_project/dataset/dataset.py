@@ -39,7 +39,9 @@ class LfwDataset(Dataset):
         img1_file = self.data.imgs[2 * index][0][self.data.imgs[2 * index][0].rfind('\\') + 1:]
         img2_file = self.data.imgs[2 * index + 1][0][self.data.imgs[2 * index + 1][0].rfind('\\') + 1:]
         img1_soft_biometrics = list(map(lambda x: int(x), soft_biometrics.get(img1_file).split(' ')))
+        img1_soft_biometrics = img1_soft_biometrics[0:2]
         img2_soft_biometrics = list(map(lambda x: int(x), soft_biometrics.get(img2_file).split(' ')))
+        img2_soft_biometrics = img2_soft_biometrics[0:2]
         return data_transform(img1), data_transform(img2), \
             torch.tensor(img1_soft_biometrics), torch.tensor(img2_soft_biometrics), \
             torch.tensor(label, dtype=torch.float32)

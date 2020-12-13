@@ -1,0 +1,55 @@
+loading data...: 100%|██████████| 10/10 [00:00<00:00, 27.62it/s]
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_0.pkl'))
+Out[4]: <All keys matched successfully>
+dataset = sum([t.datasets[i] for i in range(10)])
+test_dataloader = DataLoader(dataset, batch_size= 32, shuffle=True)
+test_model(model.cuda(), test_dataloader)
+Out[7]: 0.9955
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_1.pkl'))
+Out[9]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[10]: 0.9931666666666666
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_2.pkl'))
+Out[12]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[13]: 0.9945
+model.load_state_dict(torch.load('./model_state_dict/model_3_3.pkl'))
+Out[14]: <All keys matched successfully>
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_3.pkl'))
+Out[16]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[17]: 0.9926666666666667
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_4.pkl'))
+Out[19]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[20]: 0.9946666666666667
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_5.pkl'))
+Out[22]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[23]: 0.9948333333333333
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_6.pkl'))
+Out[25]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[26]: 0.991
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_7.pkl'))
+Out[28]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[29]: 0.9968333333333333
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_8.pkl'))
+Out[31]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[32]: 0.9968333333333333
+model = CNN()
+model.load_state_dict(torch.load('./model_state_dict/model_3_9.pkl'))
+Out[34]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[35]: 0.9928333333333333

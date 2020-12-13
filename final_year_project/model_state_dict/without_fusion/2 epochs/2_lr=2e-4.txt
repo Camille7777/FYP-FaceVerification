@@ -1,0 +1,74 @@
+loading data...: 100%|██████████| 10/10 [00:04<00:00,  2.48it/s]
+************************* Number  1  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:23<00:00, 18.17it/s]
+train_loss:0.312020 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.50it/s]
+train_loss:0.159389 train_acc:1.000000
+iteration on valid set...:  99%|█████████▉| 168/169 [00:06<00:00, 26.13it/s]valid_loss:0.263036 valid_acc:0.984259
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.23it/s]
+************************* Number  2  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:23<00:00, 18.17it/s]
+train_loss:0.391342 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.35it/s]
+train_loss:0.188246 train_acc:1.000000
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.04it/s]
+valid_loss:0.269160 valid_acc:0.975000
+************************* Number  3  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.39it/s]
+train_loss:0.231088 train_acc:1.000000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.35it/s]
+train_loss:0.202181 train_acc:0.958333
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 25.93it/s]
+valid_loss:0.204978 valid_acc:0.984815
+************************* Number  4  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.33it/s]
+train_loss:0.578661 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.35it/s]
+train_loss:0.321036 train_acc:0.916667
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 25.90it/s]
+valid_loss:0.157843 valid_acc:0.978519
+************************* Number  5  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.40it/s]
+train_loss:0.452889 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.45it/s]
+train_loss:0.213753 train_acc:1.000000
+iteration on valid set...:  99%|█████████▉| 168/169 [00:06<00:00, 25.89it/s]valid_loss:0.246103 valid_acc:0.976667
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.07it/s]
+************************* Number  6  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.45it/s]
+train_loss:0.367917 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.45it/s]
+train_loss:0.225984 train_acc:0.958333
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.03it/s]
+valid_loss:0.206443 valid_acc:0.982963
+************************* Number  7  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.45it/s]
+train_loss:0.428839 train_acc:0.875000
+Training Epoch_1: 100%|██████████| 1519/1519 [01:19<00:00, 19.06it/s]
+train_loss:0.227741 train_acc:0.958333
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.50it/s]
+valid_loss:0.131019 valid_acc:0.973519
+************************* Number  8  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:19<00:00, 19.04it/s]
+train_loss:0.365956 train_acc:0.916667
+Training Epoch_1: 100%|██████████| 1519/1519 [01:19<00:00, 19.05it/s]
+train_loss:0.279522 train_acc:1.000000
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.46it/s]
+valid_loss:0.127661 valid_acc:0.981111
+************************* Number  9  fold *************************
+Training Epoch_0: 100%|██████████| 1519/1519 [01:19<00:00, 19.03it/s]
+train_loss:0.390902 train_acc:0.958333
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.49it/s]
+train_loss:0.267699 train_acc:0.958333
+iteration on valid set...:  99%|█████████▉| 168/169 [00:06<00:00, 25.71it/s]valid_loss:0.103745 valid_acc:0.985000
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 25.90it/s]
+************************* Number  10  fold *************************
+Training Epoch_0: 100%|█████████▉| 1518/1519 [01:22<00:00, 18.46it/s]train_loss:0.370241 train_acc:0.875000
+Training Epoch_0: 100%|██████████| 1519/1519 [01:22<00:00, 18.44it/s]
+Training Epoch_1: 100%|██████████| 1519/1519 [01:22<00:00, 18.46it/s]
+train_loss:0.182655 train_acc:0.958333
+iteration on valid set...: 100%|██████████| 169/169 [00:06<00:00, 26.04it/s]
+valid_loss:0.225423 valid_acc:0.985741
+########## Final 10-fold cross validation result ##########
+train_loss_sum:0.226821 train_acc_sum:0.970833
+ valid_loss_sum:0.193541 valid_acc_sum:0.980759

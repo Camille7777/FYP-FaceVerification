@@ -1,6 +1,6 @@
 import torch
 import pandas as pd
-from torch.optim import Adam, SGD
+from torch.optim import Adam
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from torch.nn import functional as F
@@ -9,6 +9,7 @@ import os
 
 from model.cnn_model import CNN, ContrastiveLoss
 from dataset.dataset import LfwDataset
+from train_fusion import *
 
 
 class Trainer:
@@ -41,7 +42,7 @@ class Trainer:
             valid, train = self.get_10_fold_data(k)
 
             print('*' * 25, 'Number ', k, ' fold', '*' * 25)
-            train_ls, valid_ls = self.train_k(valid, train, num_epochs, seed=k, log_path='log/output.xlsx')
+            train_ls, valid_ls = self.train_k(valid, train, num_epochs, seed=k, fusion_method='append', log_path='log/output.xlsx')
             train_loss_sum += train_ls[-1][0]
             valid_loss_sum += valid_ls[-1][0]
             train_acc_sum += train_ls[-1][1]
@@ -51,7 +52,7 @@ class Trainer:
         print('train_loss_sum:%.6f' % (train_loss_sum / 10), 'train_acc_sum:%.6f\n' % (train_acc_sum / 10),
               'valid_loss_sum:%.6f' % (valid_loss_sum / 10), 'valid_acc_sum:%.6f' % (valid_acc_sum / 10))
 
-    def train_k(self, valid_dataset, train_dataset, train_num_epochs, seed, log_path):
+    def train_k(self, valid_dataset, train_dataset, train_num_epochs, seed, fusion_method, log_path):
         '''if not os.path.isfile(log_path):
             df = pd.DataFrame(columns=["Fold number", "Training epoch",
                                        "train_loss", "train_acc",
@@ -70,10 +71,14 @@ class Trainer:
                            desc='Training Epoch_%s' % epoch,
                            total=len(train_dataloader)) as t:
                 for i, data in t:
-                    img1, img2, _, _, train_label = data
-                    img1, img2, train_label = img1.to(self.device), img2.to(self.device), train_label.to(self.device)
+                    img1, img2, soft_bio1, soft_bio2, train_label = data
+                    img1, img2, soft_bio1, soft_bio2, train_label = img1.to(self.device), img2.to(self.device), \
+                                                                    soft_bio1.to(self.device), soft_bio2.to(self.device), \
+                                                                    train_label.to(self.device)
 
                     output1, output2 = model(img1, img2)
+                    output1 = get_fusion_result(fusion_method, output1, soft_bio1)
+                    output2 = get_fusion_result(fusion_method, output2, soft_bio2)
                     loss_contrastive = self.loss_fcn(output1, output2, train_label)
                     optimizer.zero_grad()
                     loss_contrastive.backward()
@@ -99,10 +104,14 @@ class Trainer:
                            desc='iteration on valid set...',
                            total=len(valid_dataloader)) as t:
                 for j, data1 in t:
-                    img01, img02, _, _, valid_label = data1
-                    img01, img02, valid_label = img01.to(self.device), img02.to(self.device), valid_label.to(
-                        self.device)
+                    img01, img02, soft_bio01, soft_bio02, valid_label = data1
+                    img01, img02, soft_bio01, soft_bio02, valid_label = img01.to(self.device), img02.to(self.device), \
+                                                                    soft_bio01.to(self.device), soft_bio02.to(self.device), \
+                                                                    valid_label.to(self.device)
+
                     output01, output02 = model(img01, img02)
+                    output01 = get_fusion_result(fusion_method, output01, soft_bio01)
+                    output02 = get_fusion_result(fusion_method, output02, soft_bio02)
                     loss_contrastive = self.loss_fcn(output01, output02, valid_label)
                     valid_dist = F.pairwise_distance(output01, output02)
                     valid_predict_lb = (valid_dist < 1).int()
@@ -110,7 +119,7 @@ class Trainer:
                     valid_accurancy = count.item() / len(valid_dataloader.dataset)
                     valid_ls.append(self.res(loss_contrastive.item(), valid_accurancy))
             print('valid_loss:%.6f' % valid_ls[-1][0], 'valid_acc:%.6f' % valid_ls[-1][1])
-        torch.save(model.state_dict(), f'model_state_dict/5 epochs/model_{train_number_epochs}_{seed}.pkl')
+        torch.save(model.state_dict(), f'model_state_dict/with_fusion/fusion_simple_append/model_{train_number_epochs}_{seed}.pkl')
         return train_ls, valid_ls
 
     def res(self, x, y):
@@ -131,6 +140,7 @@ def test_model(model, test_loader: DataLoader):
 
 
 if __name__ == '__main__':
-    train_number_epochs = 5
+    train_number_epochs = 2
+
     t = Trainer(CNN, learning_rate=2e-4, batch_size=32, use_cuda=True)
     #t.k_fold_iteration(train_number_epochs)
