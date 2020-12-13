@@ -1,5 +1,4 @@
 import torch
-import pandas as pd
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 import torch.nn as nn
@@ -9,7 +8,6 @@ import os
 
 from model.cnn_model import DSASN, ContrastiveLoss
 from dataset.dataset import LfwDataset
-from train_fusion import *
 
 
 class Trainer:
@@ -61,7 +59,7 @@ class Trainer:
 
         train_ls, valid_ls = [], []
         torch.manual_seed(seed)
-        model = self.model().to(self.device)
+        model = self.model(fusion_method=fusion_method).to(self.device)
         optimizer = self.optimizer(model.parameters(), lr=self.lr, betas=(0.9, 0.98))
         train_dataloader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         valid_dataloader = DataLoader(valid_dataset, batch_size=self.batch_size, shuffle=True)
@@ -76,9 +74,7 @@ class Trainer:
                                                                     soft_bio1.to(self.device), soft_bio2.to(self.device), \
                                                                     train_label.to(self.device)
 
-                    output1, output2 = model(img1, img2)
-                    output1 = get_fusion_result(fusion_method, output1, soft_bio1)
-                    output2 = get_fusion_result(fusion_method, output2, soft_bio2)
+                    output1, output2 = model(img1, img2, soft_bio1, soft_bio2)
                     loss_contrastive = self.loss_fcn(output1, output2, train_label)
                     optimizer.zero_grad()
                     loss_contrastive.backward()
@@ -109,9 +105,7 @@ class Trainer:
                                                                     soft_bio01.to(self.device), soft_bio02.to(self.device), \
                                                                     valid_label.to(self.device)
 
-                    output01, output02 = model(img01, img02)
-                    output01 = get_fusion_result(fusion_method, output01, soft_bio01)
-                    output02 = get_fusion_result(fusion_method, output02, soft_bio02)
+                    output01, output02 = model(img01, img02, soft_bio1, soft_bio2)
                     loss_contrastive = self.loss_fcn(output01, output02, valid_label)
                     valid_dist = F.pairwise_distance(output01, output02)
                     valid_predict_lb = (valid_dist < 1).int()

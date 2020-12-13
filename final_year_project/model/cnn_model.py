@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-fusion_fcns = {}
+from .train_fusion import *
 
 
 class ConvUnit(nn.Module):
@@ -46,7 +45,7 @@ class DSASN(nn.Module):
 
             nn.Linear(1000, 10)
         )
-        self.fusion_fcn = fusion_fcns.get(fusion_method, lambda x, y: x)
+        self.fusion_fcn = fusion_dict.get(fusion_method, lambda x, y: x)
 
     def forward_once(self, img, feature):
         output = self.cnn_layers(img)
