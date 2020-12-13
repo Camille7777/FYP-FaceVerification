@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+fusion_fcns = {}
+
 
 class ConvUnit(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
@@ -20,9 +22,9 @@ class ConvUnit(nn.Module):
         return self.conv_layer(img)
 
 
-class CNN(nn.Module):
-    def __init__(self):
-        super(CNN, self).__init__()
+class DSASN(nn.Module):
+    def __init__(self, fusion_method=None):
+        super(DSASN, self).__init__()
         self.cnn_layers = nn.Sequential(
             # Input Tensor Shape: [batch_size, 3, 64, 64]
             # Output Tensor Shape: [batch_size, 32, 32, 32]
@@ -44,16 +46,18 @@ class CNN(nn.Module):
 
             nn.Linear(1000, 10)
         )
+        self.fusion_fcn = fusion_fcns.get(fusion_method, lambda x, y: x)
 
-    def forward_once(self, img):
+    def forward_once(self, img, feature):
         output = self.cnn_layers(img)
         output = output.view(output.size(0), -1)
         output = self.fc_layer(output)
+        output = self.fusion_fcn(output, feature)
         return output
 
-    def forward(self, input1, input2):
-        output1 = self.forward_once(input1)
-        output2 = self.forward_once(input2)
+    def forward(self, input1, input2, feature1, feature2):
+        output1 = self.forward_once(input1, feature1)
+        output2 = self.forward_once(input2, feature2)
         return output1, output2
 
     # def init_weights(self, module):
