@@ -1,52 +1,51 @@
 dataset = sum([t.datasets[i] for i in range(10)])
 test_dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_0.pkl'))
-Out[7]: <All keys matched successfully>
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_0.pkl'))
+Out[6]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[8]: 0.9411666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_1.pkl'))
-Out[10]: <All keys matched successfully>
+Out[7]: 0.9418333333333333
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_1.pkl'))
+Out[9]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[11]: 0.9426666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_2.pkl'))
-Out[13]: <All keys matched successfully>
+Out[10]: 0.9466666666666667
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_2.pkl'))
+Out[11]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[14]: 0.9413333333333334
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_3.pkl'))
-Out[16]: <All keys matched successfully>
+Out[12]: 0.9326666666666666
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_3.pkl'))
+Out[14]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[17]: 0.9271666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_4.pkl'))
-Out[19]: <All keys matched successfully>
+Out[15]: 0.9453333333333334
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_4.pkl'))
+Out[17]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[20]: 0.9336666666666666
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_5.pkl'))
-Out[22]: <All keys matched successfully>
+Out[18]: 0.9381666666666667
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_5.pkl'))
+Out[20]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[23]: 0.9546666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_6.pkl'))
-Out[25]: <All keys matched successfully>
+Out[21]: 0.9476666666666667
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_6.pkl'))
+Out[23]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[26]: 0.9443333333333334
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_7.pkl'))
-Out[28]: <All keys matched successfully>
+Out[24]: 0.9316666666666666
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_7.pkl'))
+Out[26]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[29]: 0.9341666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_8.pkl'))
-Out[31]: <All keys matched successfully>
+Out[27]: 0.9476666666666667
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_8.pkl'))
+Out[29]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[32]: 0.9341666666666667
-model = CNN()
-model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/model_2_9.pkl'))
-Out[34]: <All keys matched successfully>
+Out[30]: 0.942
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/with_fusion/fusion_simple_append/no_weight/model_2_9.pkl'))
+Out[32]: <All keys matched successfully>
 test_model(model.cuda(), test_dataloader)
-Out[35]: 0.9361666666666667
+Out[33]: 0.9361666666666667

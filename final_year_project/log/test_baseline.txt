@@ -1,0 +1,53 @@
+loading data...: 100%|██████████| 10/10 [00:00<00:00, 26.18it/s]
+dataset = sum([t.datasets[i] for i in range(10)])
+test_dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_0.pkl'))
+Out[6]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[7]: 0.9783333333333334
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_1.pkl'))
+Out[9]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[10]: 0.9746666666666667
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_2.pkl'))
+Out[12]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[13]: 0.984
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_3.pkl'))
+Out[15]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[16]: 0.9733333333333334
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_4.pkl'))
+Out[18]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[19]: 0.9808333333333333
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_5.pkl'))
+Out[21]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[22]: 0.9758333333333333
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_6.pkl'))
+Out[24]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[25]: 0.9798333333333333
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_7.pkl'))
+Out[27]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[28]: 0.9856666666666667
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_8.pkl'))
+Out[30]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[31]: 0.9841666666666666
+model = DSASN()
+model.load_state_dict(torch.load('./model_state_dict/model_2_9.pkl'))
+Out[33]: <All keys matched successfully>
+test_model(model.cuda(), test_dataloader)
+Out[34]: 0.9833333333333333
