@@ -1,3 +1,3 @@
 # FYP-FaceVerification
-## This is the most advanced face recognizer all over the world
+## This is just a simple practice
 Final year project 2020
